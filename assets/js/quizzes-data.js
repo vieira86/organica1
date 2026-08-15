@@ -1,0 +1,170 @@
+/* ============================================================
+   Banco de Questões de Quiz por tópico
+   Cada questão: { q, options: [4], correct: index, explain }
+   Química Orgânica I — Técnico, IFRO Ji-Paraná
+   ============================================================ */
+
+const QUIZZES = {
+
+  cadeias: [
+    { q: "Um carbono ligado a três outros átomos de carbono é classificado como:",
+      options: ["Primário", "Secundário", "Terciário", "Quaternário"],
+      correct: 2, explain: "Carbono terciário é aquele ligado diretamente a exatamente três outros carbonos." },
+    { q: "Uma cadeia que contém um átomo de oxigênio ou nitrogênio intercalado entre carbonos é chamada de:",
+      options: ["Homogênea", "Heterogênea", "Saturada", "Aromática"],
+      correct: 1, explain: "Heteroátomos (O, N, S...) intercalados na sequência principal tornam a cadeia heterogênea." },
+    { q: "A fórmula molecular C₃H₈ representa:",
+      options: ["Apenas o tipo e a quantidade de átomos", "A forma como os átomos estão ligados", "A geometria tridimensional da molécula", "O grupo funcional presente"],
+      correct: 0, explain: "A fórmula molecular informa apenas quais átomos e em que quantidade, sem indicar conectividade." },
+    { q: "Uma cadeia carbônica sem nenhuma extremidade livre (fechada sobre si mesma) é dita:",
+      options: ["Acíclica", "Cíclica", "Saturada", "Ramificada"],
+      correct: 1, explain: "Cadeias cíclicas formam um anel fechado, sem extremidades livres." },
+    { q: "Em CH₃-CH₂-CH₃, o carbono central é classificado como:",
+      options: ["Primário", "Secundário", "Terciário", "Quaternário"],
+      correct: 1, explain: "O carbono central do propano está ligado a dois outros carbonos, sendo secundário." },
+    { q: "Uma cadeia carbônica que apresenta apenas ligações simples entre os carbonos é dita:",
+      options: ["Insaturada", "Aromática", "Saturada", "Heterogênea"],
+      correct: 2, explain: "Cadeias saturadas contêm exclusivamente ligações simples (sigma) entre os átomos de carbono." }
+  ],
+
+  hidrocarbonetos: [
+    { q: "O nome oficial do composto CH₃-CH₂-CH₃ é:",
+      options: ["Metano", "Etano", "Propano", "Butano"],
+      correct: 2, explain: "Uma cadeia de três carbonos saturada recebe o sufixo -ano com o prefixo prop-, formando propano." },
+    { q: "O sufixo que indica a presença de uma ligação tripla na cadeia principal é:",
+      options: ["-ano", "-eno", "-ino", "-ol"],
+      correct: 2, explain: "O sufixo -ino é usado para indicar uma ligação tripla entre carbonos, como em etino (acetileno)." },
+    { q: "Na nomenclatura de um hidrocarboneto ramificado, a numeração da cadeia principal deve:",
+      options: ["Sempre começar pela esquerda da fórmula", "Gerar os menores localizadores possíveis para as ramificações/insaturações", "Ser feita em ordem alfabética dos substituintes", "Ignorar a posição das ramificações"],
+      correct: 1, explain: "A regra da IUPAC exige numerar de forma que os grupos e insaturações recebam os menores números possíveis." },
+    { q: "O composto CH₂=CH-CH₃ é nomeado:",
+      options: ["Propano", "Propeno", "Propino", "Ciclopropano"],
+      correct: 1, explain: "A presença de uma ligação dupla numa cadeia de 3 carbonos dá origem ao nome propeno." },
+    { q: "Um cicloalcano de 6 carbonos é chamado de:",
+      options: ["Hexano", "Ciclohexano", "Hexeno", "Benzeno"],
+      correct: 1, explain: "O prefixo 'ciclo' indica cadeia fechada; ciclohexano é o cicloalcano de seis carbonos." },
+    { q: "Quando há dois grupos metil na mesma cadeia principal, usa-se o prefixo:",
+      options: ["Di-", "Bi-", "Duo-", "Metil-metil-"],
+      correct: 0, explain: "Prefixos multiplicadores como di-, tri-, tetra- indicam quantas vezes um mesmo substituinte aparece." }
+  ],
+
+  alcoois: [
+    { q: "O grupo funcional característico dos álcoois é:",
+      options: ["Carbonila", "Hidroxila ligada a carbono saturado", "Carboxila", "Amina"],
+      correct: 1, explain: "Álcoois têm a hidroxila (-OH) ligada a um carbono saturado (sp³), o que os diferencia de fenóis e enóis." },
+    { q: "O composto CH₃-CH(OH)-CH₃ é classificado como álcool:",
+      options: ["Primário", "Secundário", "Terciário", "Aromático"],
+      correct: 1, explain: "O carbono que porta a hidroxila está ligado a dois outros carbonos, caracterizando um álcool secundário." },
+    { q: "O nome oficial do etanol pela IUPAC é:",
+      options: ["Metanol", "Etanol", "Propan-1-ol", "Etanal"],
+      correct: 1, explain: "Etanol é o próprio nome IUPAC do álcool de dois carbonos, CH₃-CH₂-OH." },
+    { q: "Álcoois de cadeia curta são solúveis em água principalmente por causa:",
+      options: ["Das forças de London", "Das ligações de hidrogênio com a água", "Da baixa massa molar apenas", "Da presença de anel aromático"],
+      correct: 1, explain: "A hidroxila forma ligações de hidrogênio com moléculas de água, favorecendo a solubilidade em cadeias curtas." },
+    { q: "Um composto com duas hidroxilas na cadeia, como o etilenoglicol, é chamado de:",
+      options: ["Fenol", "Enol", "Diol (poliol)", "Éter"],
+      correct: 2, explain: "Álcoois com mais de uma hidroxila são chamados de polióis; com duas, especificamente diol." },
+    { q: "Comparado a um hidrocarboneto de massa molar semelhante, o álcool tem ponto de ebulição:",
+      options: ["Menor, por ser mais leve", "Maior, por causa das ligações de hidrogênio", "Igual, pois a massa molar é o único fator relevante", "Imprevisível"],
+      correct: 1, explain: "As ligações de hidrogênio entre moléculas de álcool aumentam a energia necessária para a mudança de fase." }
+  ],
+
+  fenois: [
+    { q: "O que diferencia estruturalmente um fenol de um álcool?",
+      options: ["O fenol tem a hidroxila ligada a carbono de anel aromático", "O fenol não tem oxigênio", "O fenol tem duas hidroxilas sempre", "Não há diferença estrutural"],
+      correct: 0, explain: "No fenol, a hidroxila está ligada diretamente a um carbono do anel aromático, o que muda sua reatividade." },
+    { q: "Por que os fenóis são mais ácidos que os álcoois comuns?",
+      options: ["Porque têm mais hidrogênios", "Porque o fenóxido formado é estabilizado por ressonância com o anel", "Porque não formam ligação de hidrogênio", "Porque são mais voláteis"],
+      correct: 1, explain: "A carga negativa do ânion fenóxido se deslocaliza pelo anel aromático, estabilizando-o e aumentando a acidez." },
+    { q: "Um enol é caracterizado por uma hidroxila ligada a:",
+      options: ["Um carbono saturado qualquer", "Um carbono de dupla ligação (C=C-OH)", "Um anel aromático", "Um átomo de nitrogênio"],
+      correct: 1, explain: "O enol tem a hidroxila diretamente ligada a um carbono envolvido em ligação dupla C=C." },
+    { q: "A relação entre um enol e sua forma carbonílica correspondente (aldeído/cetona) é de:",
+      options: ["Isomeria de cadeia", "Isomeria de função", "Tautomeria", "Isomeria geométrica"],
+      correct: 2, explain: "Enol e a forma carbonílica se interconvertem rapidamente por deslocamento de H⁺, caracterizando tautomeria ceto-enólica." },
+    { q: "O fenol (C₆H₅OH) reage com NaOH porque:",
+      options: ["É uma base forte", "É ácido o suficiente para reagir com base forte", "É um éster", "É insolúvel em água"],
+      correct: 1, explain: "A acidez do fenol, maior que a dos álcoois, permite sua reação com hidróxidos formando fenolato e água." }
+  ],
+
+  eteres: [
+    { q: "O grupo funcional dos éteres é representado por:",
+      options: ["R-OH", "R-O-R'", "R-COOH", "R-CO-R'"],
+      correct: 1, explain: "Éteres têm um oxigênio ligado a dois grupos carbônicos, sem hidrogênio diretamente no oxigênio." },
+    { q: "Por que éteres têm ponto de ebulição menor que álcoois de massa molar semelhante?",
+      options: ["Porque são mais densos", "Porque não fazem ligação de hidrogênio entre si", "Porque têm menos átomos de carbono", "Porque são mais reativos"],
+      correct: 1, explain: "Sem hidrogênio ligado ao oxigênio, éteres não formam ligações de hidrogênio entre suas próprias moléculas." },
+    { q: "O composto CH₃-O-CH₂-CH₃ é um exemplo de isomeria de função com qual álcool?",
+      options: ["Metanol", "Etanol", "Propan-1-ol", "Propan-2-ol"],
+      correct: 2, explain: "CH₃-O-CH₂-CH₃ (metoxietano) e o propan-1-ol compartilham a fórmula molecular C₃H₈O, sendo isômeros de função." },
+    { q: "Éteres são frequentemente usados em laboratório como:",
+      options: ["Ácidos fortes", "Solventes para reações orgânicas", "Agentes oxidantes", "Indicadores de pH"],
+      correct: 1, explain: "Por serem pouco reativos e dissolverem bem compostos orgânicos, éteres são solventes comuns em síntese orgânica." },
+    { q: "O éter etílico já foi amplamente utilizado como:",
+      options: ["Conservante de alimentos", "Anestésico", "Fertilizante", "Corante têxtil"],
+      correct: 1, explain: "O dietil éter foi um dos primeiros anestésicos gerais usados na medicina." }
+  ],
+
+  carbonilas: [
+    { q: "O grupo funcional comum a aldeídos e cetonas é:",
+      options: ["Hidroxila", "Carbonila (C=O)", "Carboxila", "Amina"],
+      correct: 1, explain: "Ambas as funções compartilham o grupo carbonila, um carbono duplamente ligado a um oxigênio." },
+    { q: "O que diferencia um aldeído de uma cetona?",
+      options: ["O aldeído não tem oxigênio", "Na cetona a carbonila está no interior da cadeia; no aldeído, na extremidade", "A cetona sempre tem anel aromático", "Não há diferença estrutural"],
+      correct: 1, explain: "No aldeído a carbonila fica ligada a pelo menos um H numa extremidade; na cetona, entre dois carbonos." },
+    { q: "O nome oficial do composto CH₃-CHO é:",
+      options: ["Metanal", "Etanal", "Propanal", "Propanona"],
+      correct: 1, explain: "Etanal é o aldeído de dois carbonos, com sufixo -al." },
+    { q: "O nome usual da propanona (CH₃-CO-CH₃) é:",
+      options: ["Formol", "Álcool", "Acetona", "Vinagre"],
+      correct: 2, explain: "Acetona é o nome popular da propanona, cetona muito usada como solvente." },
+    { q: "Aldeídos se oxidam mais facilmente que cetonas porque:",
+      options: ["Têm um hidrogênio disponível na carbonila para ser removido na oxidação", "São menos reativos", "Não têm oxigênio na estrutura", "São sempre aromáticos"],
+      correct: 0, explain: "O hidrogênio ligado à carbonila do aldeído é removido na oxidação, formando o ácido carboxílico correspondente." },
+    { q: "O metanal (formaldeído) é usado, entre outras aplicações, como:",
+      options: ["Anestésico", "Conservante (formol)", "Adoçante", "Combustível de foguetes"],
+      correct: 1, explain: "Em solução aquosa, o metanal (formol) é amplamente usado como conservante e desinfetante." }
+  ],
+
+  "acidos-esteres": [
+    { q: "O grupo funcional dos ácidos carboxílicos é:",
+      options: ["-OH", "-CHO", "-COOH", "-COO-"],
+      correct: 2, explain: "A carboxila (-COOH) combina carbonila e hidroxila no mesmo carbono, definindo os ácidos carboxílicos." },
+    { q: "O nome usual do ácido etanoico é:",
+      options: ["Ácido fórmico", "Ácido acético", "Ácido propiônico", "Ácido butírico"],
+      correct: 1, explain: "Ácido acético é o nome popular do ácido etanoico, presente no vinagre." },
+    { q: "Ácidos carboxílicos têm ponto de ebulição elevado principalmente porque:",
+      options: ["São todos aromáticos", "Formam dímeros por duas ligações de hidrogênio simultâneas", "Têm baixa massa molar", "Não formam ligação de hidrogênio"],
+      correct: 1, explain: "Duas moléculas de ácido carboxílico se associam por um par de ligações de hidrogênio, formando dímeros estáveis." },
+    { q: "Um éster é formado pela reação entre:",
+      options: ["Um álcool e uma amina", "Um ácido carboxílico e um álcool", "Dois ácidos carboxílicos", "Um aldeído e uma cetona"],
+      correct: 1, explain: "A esterificação de Fischer combina ácido carboxílico e álcool, liberando água e formando o éster." },
+    { q: "O composto etanoato de metila é um exemplo de:",
+      options: ["Ácido carboxílico", "Éster", "Amida", "Éter"],
+      correct: 1, explain: "O sufixo '-ato de -ila' identifica ésteres; etanoato de metila deriva do ácido etanoico com metanol." },
+    { q: "Ésteres de cadeia curta são frequentemente responsáveis por:",
+      options: ["Acidez de frutas cítricas", "Aromas e essências (ex.: frutas)", "Basicidade de aminas", "Cor de corantes vegetais"],
+      correct: 1, explain: "Muitos aromas naturais de frutas são causados por ésteres de cadeia curta." }
+  ],
+
+  nitrogenadas: [
+    { q: "O grupo funcional das aminas é caracterizado por:",
+      options: ["Nitrogênio trivalente ligado a grupo(s) carbônico(s)", "Carbonila ligada a nitrogênio", "Grupo -C≡N", "Grupo -NO₂"],
+      correct: 0, explain: "Aminas têm um átomo de nitrogênio trivalente ligado a um, dois ou três grupos carbônicos." },
+    { q: "O composto (CH₃)₃N (trimetilamina) é classificado como amina:",
+      options: ["Primária", "Secundária", "Terciária", "Quaternária"],
+      correct: 2, explain: "Com três grupos metil ligados ao nitrogênio, trata-se de uma amina terciária." },
+    { q: "O grupo funcional das amidas é:",
+      options: ["-COOH", "-CO-NH₂ (carbonila ligada a nitrogênio)", "-C≡N", "-O-"],
+      correct: 1, explain: "Amidas têm a carbonila ligada diretamente a um átomo de nitrogênio." },
+    { q: "O grupo ciano (-C≡N) caracteriza qual função?",
+      options: ["Amina", "Amida", "Nitrila", "Nitrocomposto"],
+      correct: 2, explain: "O grupo -C≡N define as nitrilas, com carbono e nitrogênio unidos por tripla ligação." },
+    { q: "O grupo -NO₂ ligado a um carbono caracteriza:",
+      options: ["Uma amina", "Um nitrocomposto", "Uma amida", "Um éter"],
+      correct: 1, explain: "O grupo nitro (-NO₂) ligado a carbono define os nitrocompostos." },
+    { q: "Por que as aminas são consideradas compostos básicos?",
+      options: ["Porque liberam H⁺ facilmente", "Porque o par de elétrons não ligante do N pode aceitar H⁺", "Porque são sempre aromáticas", "Porque não reagem com ácidos"],
+      correct: 1, explain: "O par de elétrons livre do nitrogênio torna as aminas capazes de aceitar prótons, caracterizando basicidade." }
+  ]
+};
