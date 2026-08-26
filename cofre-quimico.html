@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cofre Químico — Desafio de Combustão | Química Orgânica I</title>
+<meta name="description" content="Desafio de balanceamento de combustão completa: descubra os coeficientes, calcule a senha de 5 dígitos e destranque o Cofre Químico para concorrer a prêmios.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ---------- Cofre Químico — estilos específicos desta página ---------- */
+  .cofre-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .cofre-card h3{ margin-top: 0; }
+  .cofre-sub{ color: var(--text-muted); font-size: 0.95rem; }
+
+  .cofre-mol-frame{
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    margin: 16px 0 20px;
+  }
+  .cofre-mol-frame img{ max-width: 100%; max-height: 260px; margin: 0 auto; background: #fff; border-radius: 6px; }
+  .cofre-mol-caption{ color: var(--text-muted); font-size: 0.82rem; margin-top: 8px; }
+
+  .cofre-steps{ padding-left: 1.2em; }
+  .cofre-steps li{ margin-bottom: 8px; }
+  .cofre-formula{
+    font-family: var(--font-mono);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+  }
+  .cofre-legend{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 6px 14px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 10px 0 4px;
+  }
+  .cofre-legend b{ color: var(--text); font-family: var(--font-mono); }
+
+  .cofre-safe{
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--border);
+  }
+  .cofre-lock-icon{ font-size: 2.4rem; margin-bottom: 6px; }
+  .cofre-digits{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .cofre-digit{
+    width: 46px; height: 56px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-family: var(--font-mono);
+    color: var(--text);
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+  }
+  .cofre-digit:focus{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(167,139,250,0.25); }
+  .cofre-safe.cofre-unlocked .cofre-digit{ border-color: var(--success); color: var(--success); }
+  @keyframes cofre-shake-kf{
+    10%,90% { transform: translateX(-2px); }
+    20%,80% { transform: translateX(4px); }
+    30%,50%,70% { transform: translateX(-8px); }
+    40%,60% { transform: translateX(8px); }
+  }
+  .cofre-shake .cofre-digits{ animation: cofre-shake-kf 0.5s; }
+  .cofre-msg{ min-height: 1.4em; font-size: 0.92rem; margin-top: 4px; }
+  .cofre-msg.ok{ color: var(--success); }
+  .cofre-msg.err{ color: var(--danger); }
+  .cofre-msg.warn{ color: var(--warning); }
+
+  .cofre-prizes{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px,1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .cofre-prize-btn{
+    display: flex; flex-direction: column; gap: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: var(--font-body);
+    text-align: left;
+    transition: all .15s ease;
+  }
+  .cofre-prize-btn:hover:not(:disabled){ border-color: var(--accent); background: var(--surface); }
+  .cofre-prize-btn:disabled{ opacity: 0.45; cursor: not-allowed; text-decoration: line-through; }
+  .cofre-prize-label{ font-weight: 600; }
+  .cofre-prize-vagas{ font-size: 0.8rem; color: var(--text-muted); }
+  .cofre-warn-inline{ color: var(--warning); }
+
+  .cofre-final{
+    text-align: center;
+    padding: 18px 6px 4px;
+    font-size: 1.05rem;
+  }
+  .cofre-registered{ display: block; margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); }
+
+  .cofre-gate .field{ margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <span class="mol">⚗️</span>
+      <span>Química Orgânica I<br><small>Técnico em Química — IFRO Ji-Paraná</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="materiais.html">Materiais</a>
+      <a href="exercicios.html">Exercícios</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="quizzes.html">Quizzes</a>
+      <a href="videos.html">Vídeos</a>
+      <a href="praticas.html">Práticas</a>
+      <a href="moleculas.html">🧬 Moléculas</a>
+      <a href="autor.html">Autor</a>
+    </div>
+  </nav>
+</header>
+
+<section>
+  <div class="container">
+    <h1 class="section-title">🔐 Cofre Químico — Desafio de Combustão</h1>
+    <p class="section-sub">Balanceie a combustão completa da substância abaixo, calcule a expressão pedida
+      e descubra a senha de 5 algarismos que abre o cofre. Os primeiros a destrancar concorrem aos
+      prêmios disponíveis — quando as vagas acabam, aparece na tela para os próximos.</p>
+
+    <div id="cofre-body"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Química Orgânica I — Técnico em Química, IFRO Campus Ji-Paraná<br>
+    Desenvolvido por <a href="autor.html">Prof. Dr. Rafael Vieira</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/sheets-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/cofre-quiz.js"></script>
+</body>
+</html>
