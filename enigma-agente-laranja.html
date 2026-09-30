@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enigma — O Código do Agente-Laranja | Química Orgânica I</title>
+<meta name="description" content="Enigma em 4 etapas: identifique as funções orgânicas do Agente-Laranja (2,4-D), calcule sua massa molar, balanceie a combustão completa e descubra o código secreto.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ---------- Enigma do Agente-Laranja — estilos desta página ---------- */
+  .enig-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+    max-width: 680px;
+    margin: 0 auto 18px;
+  }
+  .enig-card h3{ margin-top: 0; }
+  .enig-sub{ color: var(--text-muted); font-size: 0.95rem; }
+  .enig-story{
+    border-left: 3px solid #f97316;
+    background: var(--surface-2);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.95rem;
+  }
+  .enig-story em{ color: #fdba74; font-style: normal; }
+
+  .enig-mol-frame{
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    margin: 16px 0 6px;
+  }
+  .enig-mol-frame img{ max-width: 100%; max-height: 280px; margin: 0 auto; background: #fff; border-radius: 6px; padding: 6px; }
+
+  /* barra de progresso das 4 etapas */
+  .enig-progress{
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    max-width: 680px; margin: 0 auto 18px;
+  }
+  .enig-pill{
+    font-size: 0.8rem; padding: 6px 12px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted);
+  }
+  .enig-pill.on{ border-color: #f97316; color: var(--text); }
+  .enig-pill.done{ border-color: var(--success); color: var(--success); }
+
+  /* etapas */
+  .enig-stage{ position: relative; transition: opacity .25s ease; }
+  .enig-stage.locked{ opacity: 0.42; pointer-events: none; user-select: none; }
+  .enig-stage.locked .enig-stage-body{ filter: blur(3px); }
+  .enig-stage-tag{
+    display: inline-block; font-size: 0.75rem; letter-spacing: .5px; text-transform: uppercase;
+    color: #fdba74; margin-bottom: 4px;
+  }
+  .enig-stage.solved .enig-stage-tag{ color: var(--success); }
+
+  .enig-options{ display: grid; gap: 8px; margin: 12px 0; }
+  .enig-opt{
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px; color: var(--text); cursor: pointer; text-align: left;
+    font-family: var(--font-body); font-size: 0.95rem; transition: all .15s ease;
+  }
+  .enig-opt:hover:not(:disabled){ border-color: #f97316; }
+  .enig-opt b{ font-family: var(--font-mono); color: #fdba74; }
+  .enig-opt.wrong{ border-color: var(--danger); opacity: .55; text-decoration: line-through; }
+  .enig-opt.right{ border-color: var(--success); background: rgba(74,222,128,0.08); }
+  .enig-opt:disabled{ cursor: default; }
+
+  .enig-row{ display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
+  .enig-input{
+    font-family: var(--font-mono); font-size: 1.1rem; width: 140px;
+    padding: 10px 12px; color: var(--text); background: var(--surface-2);
+    border: 2px solid var(--border); border-radius: 8px; outline: none;
+  }
+  .enig-input:focus{ border-color: #f97316; }
+  .enig-unit{ color: var(--text-muted); font-family: var(--font-mono); }
+
+  .enig-formula{
+    font-family: var(--font-mono);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.02rem;
+    letter-spacing: 0.3px;
+    overflow-x: auto;
+  }
+  .enig-frac{ display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; }
+  .enig-frac > span:first-child{ border-bottom: 1.5px solid var(--text); padding: 0 6px 3px; }
+  .enig-frac > span:last-child{ padding-top: 3px; }
+  .enig-legend{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+    gap: 6px 14px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 10px 0 4px;
+  }
+  .enig-legend b{ color: var(--text); font-family: var(--font-mono); }
+  .enig-masses{ font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); }
+
+  .enig-msg{ min-height: 1.4em; font-size: 0.92rem; margin-top: 6px; }
+  .enig-msg.ok{ color: var(--success); }
+  .enig-msg.err{ color: var(--danger); }
+  .enig-msg.warn{ color: var(--warning); }
+
+  /* cadeado final (mesmo visual do Cofre Químico) */
+  .enig-safe{ text-align: center; margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--border); }
+  .enig-lock-icon{ font-size: 2.4rem; margin-bottom: 6px; }
+  .enig-digits{ display: flex; justify-content: center; gap: 10px; margin: 14px 0; }
+  .enig-digit{
+    width: 50px; height: 60px; text-align: center; font-size: 1.7rem;
+    font-family: var(--font-mono); color: var(--text); background: var(--surface-2);
+    border: 2px solid var(--border); border-radius: 8px; outline: none;
+  }
+  .enig-digit:focus{ border-color: #f97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.25); }
+  .enig-safe.unlocked .enig-digit{ border-color: var(--success); color: var(--success); }
+  @keyframes enig-shake-kf{
+    10%,90% { transform: translateX(-2px); }
+    20%,80% { transform: translateX(4px); }
+    30%,50%,70% { transform: translateX(-8px); }
+    40%,60% { transform: translateX(8px); }
+  }
+  .enig-shake{ animation: enig-shake-kf 0.5s; }
+
+  .enig-final{ text-align: center; padding: 10px 6px 4px; font-size: 1.05rem; }
+  .enig-final .big{ font-size: 2.6rem; display: block; margin-bottom: 6px; }
+  .enig-registered{ display: block; margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); }
+  .enig-gate .field{ margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <span class="mol">⚗️</span>
+      <span>Química Orgânica I<br><small>Técnico em Química — IFRO Ji-Paraná</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="videos.html">Vídeos</a>
+      <!-- <a href="cofre-quimico.html">🔐 Cofre</a> -->
+      <a href="autor.html">Autor</a>
+    </div>
+  </nav>
+</header>
+
+<section>
+  <div class="container">
+    <h1 class="section-title">🔐 Enigma — O Código do Agente-Laranja</h1>
+    <p class="section-sub">Quatro fechaduras, uma molécula. Cada etapa resolvida destranca a próxima —
+      até o código final.</p>
+
+    <div id="enig-body"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Química Orgânica I — Técnico em Química, IFRO Campus Ji-Paraná<br>
+    Desenvolvido por <a href="autor.html">Prof. Dr. Rafael Vieira</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/sheets-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/enigma-laranja.js"></script>
+</body>
+</html>
