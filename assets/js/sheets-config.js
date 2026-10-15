@@ -21,3 +21,11 @@ const SHEETS_PLATFORM_NAME = "Química Orgânica I — Técnico";
    registra na planilha (o aluno vê um aviso para mostrar a tela).
    ------------------------------------------------------------ */
 const ENIGMA_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyBfHeZGH3IAcMRhOcRnqNsRyPjpPwn5iheodAIyByqT8ZdniACWVfug_ICcy64X07P/exec";
+
+/* ------------------------------------------------------------
+   Enigma do Taxol — Web App SEPARADO (planilha própria).
+   Veja google-apps-script/enigma-taxol/COMO_CONFIGURAR.md.
+   Enquanto estiver vazio, o enigma funciona normalmente, mas não
+   registra na planilha (o aluno vê um aviso para mostrar a tela).
+   ------------------------------------------------------------ */
+const ENIGMA_TAXOL_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby8Vju5xOo3mxZR6C-V7E93f8z4V_bv9rWIfM9d-ozboREMxuMI_Xtm8FdON52jR0YAFQ/exec";
